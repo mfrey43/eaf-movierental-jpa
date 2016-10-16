@@ -1,15 +1,33 @@
 package ch.fhnw.edu.rental.model;
 
+import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
 
+@Entity
+@Table(name = "RENTALS")
 public class Rental {
+	@Id
+	@GeneratedValue
+	@Column(name = "RENTAL_ID")
 	private Long id;
-	
+
+	@OneToOne
+	@JoinColumn(name = "MOVIE_ID")
 	private Movie movie;
+
+	@ManyToOne(cascade = CascadeType.REMOVE)
+	@JoinColumn(name = "USER_ID")
 	private User user;
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "RENTAL_RENTALDATE")
 	private Date rentalDate;
+
+	@Column(name = "RENTAL_RENTALDAYS")
 	private int rentalDays;
+
+	public Rental(){}
 	
 	public Rental(User user, Movie movie, int rentalDays) {
 		if (user == null || movie == null || rentalDays <= 0) {

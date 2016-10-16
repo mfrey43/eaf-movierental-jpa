@@ -1,6 +1,14 @@
 package ch.fhnw.edu.rental.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "PRICECATEGORIES")
+@DiscriminatorColumn(name = "PRICECATEGORY_TYPE")
 public abstract class PriceCategory {
+	@Id
+	@GeneratedValue
+	@Column(name = "PRICECATEGORY_ID")
 	private Long id;
 
 	public Long getId() {

@@ -2,61 +2,66 @@ package ch.fhnw.edu.rental.persistence.impl;
 
 import java.util.List;
 
+import ch.fhnw.edu.rental.model.Movie;
 import org.springframework.stereotype.Repository;
 
 import ch.fhnw.edu.rental.model.Rental;
 import ch.fhnw.edu.rental.model.User;
 import ch.fhnw.edu.rental.persistence.RentalRepository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+
 @Repository
 public class JpaRentalRepository implements RentalRepository {
 
+	@PersistenceContext
+	private EntityManager em;
+
 	@Override
 	public Rental findOne(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return em.find(Rental.class, id);
 	}
 
 	@Override
 	public List<Rental> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		TypedQuery<Rental> q = em.createQuery("SELECT r FROM Rental r", Rental.class);
+		return q.getResultList();
 	}
 
 	@Override
 	public Rental save(Rental entity) {
-		// TODO Auto-generated method stub
-		return null;
+		return em.merge(entity);
 	}
 
 	@Override
 	public void delete(Long id) {
-		// TODO Auto-generated method stub
-		
+		delete(findOne(id));
 	}
 
 	@Override
 	public void delete(Rental entity) {
-		// TODO Auto-generated method stub
-		
+		em.remove(entity);
 	}
 
 	@Override
 	public boolean exists(Long id) {
-		// TODO Auto-generated method stub
-		return false;
+        TypedQuery<Long> q = em.createQuery(
+                "SELECT COUNT(r) FROM Rental r where r.id = :id", Long.class);
+        q.setParameter("id", id);
+        return q.getSingleResult() > 0;
 	}
 
 	@Override
 	public long count() {
-		// TODO Auto-generated method stub
-		return 0;
+        return em.createQuery("SELECT COUNT(r) FROM Rental r", Long.class)
+                .getSingleResult();
 	}
 
 	@Override
 	public List<Rental> findByUser(User user) {
-		// TODO Auto-generated method stub
-		return null;
+		return user.getRentals();
 	}
 
 }

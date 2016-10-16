@@ -1,14 +1,28 @@
 package ch.fhnw.edu.rental.model;
 
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
+@Table(name = "MOVIES")
 public class Movie {
+	@Id
+	@GeneratedValue
+	@Column(name = "MOVIE_ID")
 	private Long id;
 
+	@Column(name = "MOVIE_TITLE")
 	private String title;
+	@Temporal(TemporalType.DATE)
+	@Column(name = "MOVIE_RELEASEDATE")
 	private Date releaseDate;
+	@Column(name = "MOVIE_RENTED")
 	private boolean rented;
+	@OneToOne
+	@JoinColumn(name = "PRICECATEGORY_FK")
 	private PriceCategory priceCategory;
+
+	public Movie(){}
 
 	public Movie(String title, Date releaseDate, PriceCategory priceCategory) throws NullPointerException {
 		if ((title == null) || (releaseDate == null) || (priceCategory == null)) {

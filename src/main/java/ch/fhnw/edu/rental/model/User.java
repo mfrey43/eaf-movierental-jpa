@@ -1,15 +1,28 @@
 package ch.fhnw.edu.rental.model;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "USERS")
 public class User {
+	@Id
+	@GeneratedValue
+    @Column(name = "USER_ID")
 	private Long id;
 
+    @Column(name = "USER_NAME")
 	private String lastName;
+    @Column(name = "USER_FIRSTNAME")
 	private String firstName;
+    @Column(name = "USER_EMAIL")
 	private String email;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
 	private List<Rental> rentals;
+
+    public User(){}
 
 	public User(String lastName, String firstName) {
 		this.lastName = lastName;

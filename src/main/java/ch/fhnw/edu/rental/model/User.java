@@ -19,7 +19,7 @@ public class User {
     @Column(name = "USER_EMAIL")
 	private String email;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.REMOVE)
 	private List<Rental> rentals;
 
     public User(){}

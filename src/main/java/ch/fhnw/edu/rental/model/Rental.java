@@ -16,7 +16,7 @@ public class Rental {
 	@JoinColumn(name = "MOVIE_ID")
 	private Movie movie;
 
-	@ManyToOne(cascade = CascadeType.REMOVE)
+	@ManyToOne
 	@JoinColumn(name = "USER_ID")
 	private User user;
 

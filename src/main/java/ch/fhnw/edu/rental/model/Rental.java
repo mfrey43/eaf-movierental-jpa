@@ -12,11 +12,11 @@ public class Rental {
 	@Column(name = "RENTAL_ID")
 	private Long id;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "MOVIE_ID")
 	private Movie movie;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "USER_ID")
 	private User user;
 

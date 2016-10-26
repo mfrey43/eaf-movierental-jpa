@@ -6,6 +6,13 @@ import java.util.List;
 
 @Entity
 @Table(name = "USERS")
+@NamedQueries({
+		@NamedQuery(name = "user.all", query = "SELECT u from User u"),
+		@NamedQuery(name = "user.byLastName", query = "SELECT u FROM User u WHERE u.lastName = :lastName"),
+		@NamedQuery(name = "user.byFirstName", query = "SELECT u FROM User u WHERE u.firstName = :firstName"),
+		@NamedQuery(name = "user.byEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
+		@NamedQuery(name = "user.count", query="SELECT COUNT(u) FROM User u")
+})
 public class User {
 	@Id
 	@GeneratedValue

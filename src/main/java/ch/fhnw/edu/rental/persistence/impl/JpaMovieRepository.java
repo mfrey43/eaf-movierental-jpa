@@ -24,7 +24,7 @@ public class JpaMovieRepository implements MovieRepository {
 
 	@Override
 	public List<Movie> findAll() {
-		TypedQuery<Movie> q = em.createQuery("SELECT m FROM Movie m", Movie.class);
+		TypedQuery<Movie> q = em.createNamedQuery("movie.all", Movie.class);
 		return q.getResultList();
 	}
 
@@ -45,23 +45,18 @@ public class JpaMovieRepository implements MovieRepository {
 
 	@Override
 	public boolean exists(Long id) {
-		TypedQuery<Long> q = em.createQuery(
-				"SELECT COUNT(m) FROM Movie m where m.id = :id", Long.class);
-		q.setParameter("id", id);
-		return q.getSingleResult() > 0;
+		return findOne(id) != null;
 	}
 
 	@Override
 	public long count() {
-		return em.createQuery("SELECT COUNT(m) FROM Movie m", Long.class)
+		return em.createNamedQuery("movie.count", Long.class)
 				.getSingleResult();
 	}
 
 	@Override
 	public List<Movie> findByTitle(String title) {
-		TypedQuery<Movie> q = em.createQuery(
-				"SELECT m FROM Movie m WHERE m.title = :title",
-				Movie.class);
+		TypedQuery<Movie> q = em.createNamedQuery("movie.byTitle", Movie.class);
 		q.setParameter("title", title);
 		return q.getResultList();
 	}

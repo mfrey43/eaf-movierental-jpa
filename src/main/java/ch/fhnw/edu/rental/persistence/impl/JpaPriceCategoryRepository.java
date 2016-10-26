@@ -25,7 +25,7 @@ public class JpaPriceCategoryRepository implements PriceCategoryRepository {
 
 	@Override
 	public List<PriceCategory> findAll() {
-		TypedQuery<PriceCategory> q = em.createQuery("SELECT pc FROM PriceCategory pc", PriceCategory.class);
+		TypedQuery<PriceCategory> q = em.createNamedQuery("pricecategory.all", PriceCategory.class);
 		return q.getResultList();
 	}
 
@@ -46,15 +46,12 @@ public class JpaPriceCategoryRepository implements PriceCategoryRepository {
 
 	@Override
 	public boolean exists(Long id) {
-		TypedQuery<Long> q = em.createQuery(
-				"SELECT COUNT(pc) FROM PriceCategory pc where pc.id = :id", Long.class);
-		q.setParameter("id", id);
-		return q.getSingleResult() > 0;
+		return findOne(id) != null;
 	}
 
 	@Override
 	public long count() {
-		return em.createQuery("SELECT COUNT(pc) FROM PriceCategory pc", Long.class)
+		return em.createNamedQuery("pricecategory.count", Long.class)
 				.getSingleResult();
 	}
 

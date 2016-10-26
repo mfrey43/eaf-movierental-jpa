@@ -5,6 +5,11 @@ import java.util.Date;
 
 @Entity
 @Table(name = "MOVIES")
+@NamedQueries({
+		@NamedQuery(name = "movie.all", query = "SELECT m from Movie m"),
+		@NamedQuery(name = "movie.byTitle", query = "SELECT m FROM Movie m WHERE m.title = :title"),
+		@NamedQuery(name="movie.count", query="SELECT COUNT(m) FROM Movie m")
+})
 public class Movie {
 	@Id
 	@GeneratedValue

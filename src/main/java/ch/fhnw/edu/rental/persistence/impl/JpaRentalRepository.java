@@ -26,7 +26,7 @@ public class JpaRentalRepository implements RentalRepository {
 
 	@Override
 	public List<Rental> findAll() {
-		TypedQuery<Rental> q = em.createQuery("SELECT r FROM Rental r", Rental.class);
+		TypedQuery<Rental> q = em.createNamedQuery("rental.all", Rental.class);
 		return q.getResultList();
 	}
 
@@ -47,15 +47,12 @@ public class JpaRentalRepository implements RentalRepository {
 
 	@Override
 	public boolean exists(Long id) {
-        TypedQuery<Long> q = em.createQuery(
-                "SELECT COUNT(r) FROM Rental r where r.id = :id", Long.class);
-        q.setParameter("id", id);
-        return q.getSingleResult() > 0;
+        return findOne(id) != null;
 	}
 
 	@Override
 	public long count() {
-        return em.createQuery("SELECT COUNT(r) FROM Rental r", Long.class)
+        return em.createNamedQuery("rental.count", Long.class)
                 .getSingleResult();
 	}
 

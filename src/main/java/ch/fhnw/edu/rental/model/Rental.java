@@ -6,6 +6,10 @@ import java.util.Date;
 
 @Entity
 @Table(name = "RENTALS")
+@NamedQueries({
+		@NamedQuery(name = "rental.all", query = "SELECT r from Rental r"),
+		@NamedQuery(name="rental.count", query="SELECT COUNT(r) FROM Rental r")
+})
 public class Rental {
 	@Id
 	@GeneratedValue

@@ -45,6 +45,10 @@ public class RentalServiceImpl implements RentalService {
 			throw new RuntimeException("'rental' parameter is not set!");
 		}
 
+		// The problem is that the rental entity is not managed
+		// => add detached rental object to persistence context
+		rental = rentalRepo.save(rental);
+
 		rental.getUser().getRentals().remove(rental);
 		rental.getMovie().setRented(false);
 
